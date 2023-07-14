@@ -1,4 +1,4 @@
-# Default values for mindsdb.
+# Default values for helm-example.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -6,14 +6,14 @@ replicaCount: 1
 
 image:
   repository: mindsdb/mindsdb
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-  
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -37,41 +37,9 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  http:
-    enabled: true
-    type: ClusterIP
-    port: 47334
-    clusterIP: None
-    #loadBalancerIP:
-    #nodePort:
-    #externalTrafficPolicy:
-    #externalIPs:
-    loadBalancerSourceRanges: []
-    annotations:
-  mysql:
-    enabled: true
-    type: ClusterIP
-    port: 47335
-    clusterIP: None
-    #loadBalancerIP:
-    #nodePort:
-    #externalTrafficPolicy:
-    #externalIPs:
-    #hostPort:
-    loadBalancerSourceRanges: []
-    annotations:
-  mongodb:
-    enabled: true
-    type: ClusterIP
-    port: 47336
-    clusterIP: None
-    #loadBalancerIP:
-    #nodePort:
-    #externalTrafficPolicy:
-    #externalIPs:
-    #hostPort:
-    loadBalancerSourceRanges: []
-    annotations:
+  type: LoadBalancer
+  port: 47334
+
 ingress:
   enabled: false
   className: ""
@@ -87,26 +55,18 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-livenessProbe:
-  httpGet:
-    path: /
-    port: 47334
-  initialDelaySeconds: 30
-  timeoutSeconds: 10
-  periodSeconds: 15
-  failureThreshold: 3
-  
-resources: 
+
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits:
-    cpu: 100m
-    memory: 128Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 autoscaling:
   enabled: false

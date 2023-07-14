@@ -15,12 +15,11 @@
 
 ```bash
 ###FIRST CLONE THE WHOLE REPO cd helm/mindsdb   and then run this command   (namespace is option you can add it or if you remove it than it goes default)
-helm upgrade -i \
-  mindsdb mindsdb \
-  --namespace mindsdb \
-  --create-namespace
+3
 ```
-
+helm upgrade -i ee mindsdb --namespace mindsdb  
+ helm ls -a --all-namespaces | awk 'NR > 1 { print  "-n "$2, $1}' | xargs -L1 helm delete
+ root@ubuntu-s-2vcpu-4gb-sfo3-01:~/mindsdb# helm upgrade -i   mindsdb helm/mindsdb
 # Configuration
 
 All the configurations can be done in the [values.yaml](./mindsdb/values.yaml) file or you can create a separate YAML file with only the values that you want to override and pass it with a `-f` to the `helm install` command
